@@ -16,7 +16,8 @@ public class JwtHandlerFilterFunction implements HandlerFilterFunction<ServerRes
 //		String token = request.pathVariable("token");
 		String token = request.headers().header("X-Auth-Token").get(0);
 
-		try { User user = JwtService.pasreToken(token);
+		try {
+			User user = JwtService.pasreToken(token);
 			return ServerResponse
 					.ok()
 					.body(Mono.just(user.toJsonString()), String.class);

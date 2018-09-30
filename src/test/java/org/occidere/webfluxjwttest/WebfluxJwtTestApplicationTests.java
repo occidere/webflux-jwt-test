@@ -34,7 +34,7 @@ public class WebfluxJwtTestApplicationTests {
 		System.out.println(jwtToken);
 
 		EntityExchangeResult<String> result = webTestClient.get()
-				.uri("/check/jwt")
+				.uri("/jwt/check")
 				.header("X-Auth-Token", jwtToken)
 				.exchange()
 				.expectStatus().isOk()

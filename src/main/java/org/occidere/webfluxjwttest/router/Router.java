@@ -14,7 +14,7 @@ public class Router {
 	@Bean
 	public RouterFunction<ServerResponse> route(JwtHandler jwtHandler) {
 		return RouterFunctions
-				.route(RequestPredicates.GET("/check/jwt"), jwtHandler::getTokenFromHeader)
+				.route(RequestPredicates.GET("/jwt/check"), jwtHandler::getTokenFromHeader)
 //				.route(RequestPredicates.GET("/check/{token}"), jwtHandler::getToken)
 				.filter(new JwtHandlerFilterFunction());
 	}

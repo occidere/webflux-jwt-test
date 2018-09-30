@@ -1,10 +1,13 @@
 package org.occidere.webfluxjwttest.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.occidere.webfluxjwttest.domain.User;
+import org.occidere.webfluxjwttest.jwt.JwtService;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @RestController
 public class Controller {
 
@@ -21,5 +24,20 @@ public class Controller {
 	@GetMapping(path = "/")
 	public Mono<String> hello() {
 		return Mono.just("Hello World!");
+	}
+
+	@PostMapping(path = "/jwt/create")
+	public Mono<String> createToken(@RequestBody String body) {
+		try {
+			User user = new ObjectMapper().readValue(body, User.class);
+
+			String token = JwtService.generateJwtString(user);
+
+			return Mono.just(token);
+		} catch (Exception e) {
+			log.error("Invalid user data format!");
+
+			return Mono.just("Invalid user data format!");
+		}
 	}
 }
